@@ -51,13 +51,14 @@ class FetchFollowers:
             followers.append(follower.text.split("\n")[0])
         return followers
     
-    @measure_time
-    def compare_followers(self):
-        """
-        Compares the followers list
-        """
-        all_followers = self.get_followers()
-        new_followers = [follower for follower in all_followers if follower not in self.followers_list]
-        lost_followers = [follower for follower in self.followers_list if follower not in all_followers]
-        self.followers_list = all_followers
-        return new_followers, lost_followers
+@measure_time
+def compare_followers(self):
+    """
+    Compares the followers list and returns new and lost followers.
+    """
+    all_followers = self.get_followers()
+    new_followers = [follower for follower in all_followers if follower not in self.followers_list]
+    lost_followers = [follower for follower in self.followers_list if follower not in all_followers]
+    self.followers_list = all_followers
+    return new_followers, lost_followers
+
