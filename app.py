@@ -30,14 +30,14 @@ def get_token():
         "Content-Type": "application/x-www-form-urlencoded"
     }
 
-    response = requests.post(token_url, data=payload, headers=headers)
+    response = requests.post(token_url, data=payload, headers=headers, timeout=10)
     return response.json()["access_token"]
 
 def monitor_error(error):
     with open("./logs/error.log", "a") as error_log:
         error_log.write(f"{datetime.now(TIMEZONE).strftime('%Y-%m-%d %H:%M:%S')} An error occurred: {str(error)}\n")
         if is_send_gmail:
-            gmail_sender.send_message("Spotify - Errorr", f"An error occurred: {str(error)}")
+            gmail_sender.send_message("Spotify - Error", f"An error occurred: {str(error)}")
 
 SPOTIFY_ACCESS_TOKEN = get_token()
 
@@ -47,7 +47,7 @@ headers = {
     "Authorization": f"Bearer {SPOTIFY_ACCESS_TOKEN}"
 }
 
-init_response = requests.get(url.format(user_id=SPOTIFY_USER_ID), headers=headers)
+init_response = requests.get(url.format(user_id=SPOTIFY_USER_ID), headers=headers, timeout=10)
 total_followers = init_response.json()["followers"]["total"]
 
 time.sleep(.5)
@@ -57,7 +57,7 @@ with open("./logs/error.log", "a") as error_log:
 
 while True:
     try:
-        response = requests.get(url.format(user_id=SPOTIFY_USER_ID), headers=headers)
+        response = requests.get(url.format(user_id=SPOTIFY_USER_ID), headers=headers, timeout=10)
         temp = response.json()["followers"]["total"]
     except KeyError as expired_token:
         with open("./logs/error.log", "a") as error_log:
@@ -88,7 +88,7 @@ while True:
 
                 if is_send_gmail:
                     print(f"Sending email: {message}")
-                    gmail_sender.send_message("Spotify - Followed and Unfollowedd", message)
+                    gmail_sender.send_message("Spotify - Followed and Unfollowed", message)
 
             total_followers = temp
 
