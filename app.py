@@ -37,7 +37,7 @@ def monitor_error(error):
     with open("./logs/error.log", "a") as error_log:
         error_log.write(f"{datetime.now(TIMEZONE).strftime('%Y-%m-%d %H:%M:%S')} An error occurred: {str(error)}\n")
         if is_send_gmail:
-            gmail_sender.send_message("Spotify - Error", f"An error occurred: {str(error)}")
+            gmail_sender.send_message("Spotify - Errorr", f"An error occurred: {str(error)}")
 
 SPOTIFY_ACCESS_TOKEN = get_token()
 
@@ -88,7 +88,7 @@ while True:
 
                 if is_send_gmail:
                     print(f"Sending email: {message}")
-                    gmail_sender.send_message("Spotify - Followed and Unfollowed", message)
+                    gmail_sender.send_message("Spotify - Followed and Unfollowedd", message)
 
             total_followers = temp
 
