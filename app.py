@@ -48,7 +48,6 @@ headers = {
 }
 
 init_response = requests.get(url.format(user_id=SPOTIFY_USER_ID), headers=headers)
-
 total_followers = init_response.json()["followers"]["total"]
 
 time.sleep(.5)
@@ -78,20 +77,17 @@ while True:
     try:
         if temp != total_followers:
             print(f"Change in followers: {temp - total_followers}")
-            updated_lists = fetcher.compare_followers()
-            if updated_lists[0] or updated_lists[1]:
-                if updated_lists[0]:  # new followers
-                    if is_send_gmail:
-                        followers = ", ".join(updated_lists[0])
-                        gmail_sender.send_message("Spotify - New followers", f"New followers: {followers}")
-                if updated_lists[1]:  # unfollowers
-                    if is_send_gmail:
-                        unfollowers = ", ".join(updated_lists[1])
-                        gmail_sender.send_message("Spotify - Unfollowers", f"Unfollowers: {unfollowers}")
-            else:
-                # we are in the temp != total_followers block but the lists are empty
-                # this means the new person has followed and then unfollowed immediately
-                gmail_sender.send_message("Spotify - Followed and unfollowed", "Followed and unfollowed immediately")
+            new_followers, lost_followers = fetcher.compare_followers()
+
+            if new_followers or lost_followers:
+                message = ""
+                if new_followers:
+                    message += f"New followers: {', '.join(new_followers)}\n"
+                if lost_followers:
+                    message += f"Unfollowers: {', '.join(lost_followers)}\n"
+
+                if is_send_gmail:
+                    gmail_sender.send_message("Spotify - Followed and Unfollowed", message)
 
             total_followers = temp
 
