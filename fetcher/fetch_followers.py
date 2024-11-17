@@ -5,7 +5,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import time
 
-
 class FetchFollowers:
     def __init__(self, user_id):
         self.URL = f"https://open.spotify.com/user/{user_id}/followers"
@@ -19,7 +18,6 @@ class FetchFollowers:
         self.followers_list = []
         self.init_followers()
 
-
     # decorator to measure the time of fetching followers
     def measure_time(func):
         def wrapper(*args, **kwargs):
@@ -30,7 +28,6 @@ class FetchFollowers:
                 log_file.write(f"Time elapsed for {func.__name__}: {end - start}\n")
             return result
         return wrapper
-
 
     def init_followers(self):
         """
@@ -51,14 +48,13 @@ class FetchFollowers:
             followers.append(follower.text.split("\n")[0])
         return followers
     
-@measure_time
-def compare_followers(self):
-    """
-    Compares the followers list and returns new and lost followers.
-    """
-    all_followers = self.get_followers()
-    new_followers = [follower for follower in all_followers if follower not in self.followers_list]
-    lost_followers = [follower for follower in self.followers_list if follower not in all_followers]
-    self.followers_list = all_followers
-    return new_followers, lost_followers
-
+    @measure_time
+    def compare_followers(self):
+        """
+        Compares the followers list and returns new and lost followers.
+        """
+        all_followers = self.get_followers()
+        new_followers = [follower for follower in all_followers if follower not in self.followers_list]
+        lost_followers = [follower for follower in self.followers_list if follower not in all_followers]
+        self.followers_list = all_followers
+        return new_followers, lost_followers
