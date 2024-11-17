@@ -1,0 +1,17 @@
+{
+    "timezone": "Europe/Istanbul",
+    
+    "spotify_configs": {
+        "user_id_to_track": "ismetpunchyt",
+        "spotify_client_id": "6423a213ed204f169867e600fc73186a",
+        "spotify_client_secret": "ff6c82458b3546228b45f0027072c7a3"
+    },
+    
+    "send_gmail": true,
+    
+    "gmail_sender": {
+        "mail_from": "ismetoyunda85@gmail.com",
+        "mail_to": "ismetoyunda85@gmail.com",
+        "mail_password": "wtiglnrnkkwzbttk"
+    }
+}
