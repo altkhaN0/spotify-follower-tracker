@@ -37,7 +37,7 @@ def monitor_error(error):
     with open("./logs/error.log", "a") as error_log:
         error_log.write(f"{datetime.now(TIMEZONE).strftime('%Y-%m-%d %H:%M:%S')} An error occurred: {str(error)}\n")
         if is_send_gmail:
-            gmail_sender.send_message("Spotify - Error", f"An error occurred: {str(error)}")
+            gmail_sender.send_message("Spotify - Error (1)", f"An error occurred: {str(error)}")
 
 SPOTIFY_ACCESS_TOKEN = get_token()
 
