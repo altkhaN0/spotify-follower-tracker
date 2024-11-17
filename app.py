@@ -87,7 +87,7 @@ while True:
                     message += f"Unfollowers: {', '.join(lost_followers)}\n"
 
                 if is_send_gmail:
-                    print(f"Sending email: {message}")  # Burada e-posta gönderimi öncesi print eklendi
+                    print(f"Sending email: {message}")
                     gmail_sender.send_message("Spotify - Followed and Unfollowed", message)
 
             total_followers = temp
